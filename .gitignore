@@ -1,0 +1,9 @@
+# Python артефакты
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+
+# Виртуальные окружения
+venv/
+.venv/
