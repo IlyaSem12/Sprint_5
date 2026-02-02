@@ -27,13 +27,13 @@ def open_registration_form(browser):
     """Фикстура для открытия формы регистрации"""
     WebDriverWait(browser, 5).until(expected_conditions.element_to_be_clickable(LOGIN_AND_REGISTRATION_BUTTON)).click() 
     WebDriverWait(browser, 5).until(expected_conditions.element_to_be_clickable(NO_ACCOUNT_BUTTON)).click()
-    WebDriverWait(browser, 5).until(expected_conditions.visibility_of_element_located(HEADER_LOGIN_AND_REGISTRATION))
+    WebDriverWait(browser, 5).until(expected_conditions.visibility_of_element_located(HEADER_REGISTRATION))
     
 @pytest.fixture
 def open_login_form(browser):
     """Фикстура для открытия формы Входа"""
     WebDriverWait(browser, 5).until(expected_conditions.element_to_be_clickable(LOGIN_AND_REGISTRATION_BUTTON)).click() 
-    WebDriverWait(browser, 5).until(expected_conditions.visibility_of_element_located(HEADER_LOGIN_AND_REGISTRATION))
+    WebDriverWait(browser, 5).until(expected_conditions.visibility_of_element_located(HEADER_LOGIN))
 
 @pytest.fixture
 def open_create_listing_page(browser, login_user):

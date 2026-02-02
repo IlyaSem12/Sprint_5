@@ -13,7 +13,7 @@ class TestLoginUser:
         email_imput.send_keys(email)
         password_imput = WebDriverWait(browser, 5).until(expected_conditions.visibility_of_element_located(PASSWORD_INPUT))
         password_imput.send_keys(PASSWORD)
-        browser.find_element(*SUBMIT_BUTTON ).click()
+        browser.find_element(*LOGIN_SUBMIT_BUTTON).click()
         assert BASE_URL in browser.current_url, 'Редирект на главную страницу не был произведен'
 
     def test_login_page_success_login_user_is_displayed_user_avatar(self, browser,registration_user, open_login_form):
@@ -23,7 +23,7 @@ class TestLoginUser:
         email_imput.send_keys(email)
         password_imput = WebDriverWait(browser, 5).until(expected_conditions.visibility_of_element_located(PASSWORD_INPUT))
         password_imput.send_keys(PASSWORD)
-        browser.find_element(*SUBMIT_BUTTON).click()
+        browser.find_element(*LOGIN_SUBMIT_BUTTON).click()
         assert WebDriverWait(browser, 3).until(expected_conditions.visibility_of_element_located(AVATAR_BUTTON)).is_displayed() == True, 'Отсутствует аватар пользователя'
     
     def test_login_page_login_user_is_displayed_user_name(self,browser,registration_user, open_login_form):
@@ -33,6 +33,6 @@ class TestLoginUser:
         email_imput.send_keys(email)
         password_imput = WebDriverWait(browser, 5).until(expected_conditions.visibility_of_element_located(PASSWORD_INPUT))
         password_imput.send_keys(PASSWORD)
-        browser.find_element(*SUBMIT_BUTTON ).click()
+        browser.find_element(*LOGIN_SUBMIT_BUTTON).click()
         username = WebDriverWait(browser, 3).until(expected_conditions.visibility_of_element_located(USERNAME_HEADER))
         assert username.text == 'User.', 'Отсутствует имя пользователя'
