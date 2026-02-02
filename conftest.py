@@ -22,7 +22,6 @@ def open_base_page(browser):
     #добавляем явное ожиданяие для прогрузки страницы
     WebDriverWait(browser, 5).until(expected_conditions.presence_of_element_located(HEADER_LOGO)) 
     
-
 @pytest.fixture
 def open_registration_form(browser):
     """Фикстура для открытия формы регистрации"""
@@ -47,7 +46,6 @@ def registration_user():
     email = generate_email()
     payload = {'email': email, 'password': PASSWORD , 'submitPassword': PASSWORD}
     requests.post(SIGNUP_URL, json=payload,  headers = {"Content-Type": "application/json"})
-    
     return email
 
 @pytest.fixture
@@ -67,3 +65,4 @@ def login_user(browser,registration_user):
         token,
         user
     )
+    browser.refresh()
