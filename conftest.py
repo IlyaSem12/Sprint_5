@@ -1,12 +1,11 @@
 import pytest
 import requests
-import uuid
 from locators import *
 from config import *
 from selenium import webdriver 
 from selenium.webdriver.support.wait import WebDriverWait 
 from selenium.webdriver.support import expected_conditions
-from test_data import RegistrationPageData, LoginPageData, CreatingAdPageData
+from helpers import *
 
 @pytest.fixture
 def browser():
@@ -16,37 +15,10 @@ def browser():
     yield driver
     driver.quit()
 
-@pytest.fixture
-def test_data_registration():
-    """Фикстура для создания объекта класса RegistrationPageData"""
-    return RegistrationPageData()
-
-@pytest.fixture
-def test_data_login():
-    """Фикстура для создания объекта класса LoginPageData"""
-    return LoginPageData()
-
-@pytest.fixture
-def test_data_ad():
-    """Фикстура для создания объекта класса CreatingAdPageData"""
-    return CreatingAdPageData()
-
-
-@pytest.fixture
-def generate_email():
-    """Фикстура для генерации email"""
-    return f"test_{uuid.uuid4().hex}@yandex.ru"
-
-@pytest.fixture
-def generate_product_name():
-    """Фикстура для генерации имени товара"""
-    return f"test_product_name_{uuid.uuid4().hex}"
-
 @pytest.fixture(autouse=True)
 def open_base_page(browser):
     """Фикстура для перехода на главную страницу"""
-    #переходим по ссылке
-    browser.get(BASE_URL)
+    browser.get(BASE_URL) #переходим по ссылке
     #добавляем явное ожиданяие для прогрузки страницы
     WebDriverWait(browser, 5).until(expected_conditions.presence_of_element_located(HEADER_LOGO)) 
     
@@ -67,25 +39,22 @@ def open_login_form(browser):
 @pytest.fixture
 def open_create_listing_page(browser, login_user):
     """Фикстура для открытия формы Входа"""
-    #переходим по ссылке
-    browser.get(CREATING_LISTING_URL)
+    browser.get(CREATING_LISTING_URL)#переходим по ссылке
 
 @pytest.fixture
-def registration_user(generate_email, test_data_registration):
+def registration_user():
     """Фикстура для создания пользователя"""
-    
-    email = generate_email
-    payload = {'email': email, 'password': test_data_registration.password , 'submitPassword': test_data_registration.password}
+    email = generate_email()
+    payload = {'email': email, 'password': PASSWORD , 'submitPassword': PASSWORD}
     requests.post(SIGNUP_URL, json=payload,  headers = {"Content-Type": "application/json"})
     
     return email
 
 @pytest.fixture
-def login_user(browser,registration_user, test_data_login):
+def login_user(browser,registration_user):
     """Фикстура для авторизации пользователя"""
-    
     email = registration_user
-    payload = {'email': email, 'password': test_data_login.password}
+    payload = {'email': email, 'password': PASSWORD}
     response = requests.post(SIGNIN_URL, json=payload,  headers = {"Content-Type": "application/json"})
     token = response.json()["token"]['access_token']
     user = response.json()["user"]
@@ -98,8 +67,3 @@ def login_user(browser,registration_user, test_data_login):
         token,
         user
     )
-
-    browser.refresh()
-
-    browser.refresh()
-
