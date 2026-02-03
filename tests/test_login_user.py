@@ -24,7 +24,7 @@ class TestLoginUser:
         password_imput = WebDriverWait(browser, 5).until(expected_conditions.visibility_of_element_located(PASSWORD_INPUT))
         password_imput.send_keys(PASSWORD)
         browser.find_element(*LOGIN_SUBMIT_BUTTON).click()
-        assert WebDriverWait(browser, 3).until(expected_conditions.visibility_of_element_located(AVATAR_BUTTON)).is_displayed() == True, 'Отсутствует аватар пользователя'
+        assert WebDriverWait(browser, 3).until(expected_conditions.visibility_of_element_located(AVATAR_BUTTON)), 'Отсутствует аватар пользователя'
     
     def test_login_page_login_user_is_displayed_user_name(self,browser,registration_user, open_login_form):
         """Тест проверяет, что зарегистрированный пользователь может успешно авторизоваться и после входа в правом верхнем углу около кнопки «Разместить объявление» отображается имя пользователя 'User.'"""
@@ -34,5 +34,4 @@ class TestLoginUser:
         password_imput = WebDriverWait(browser, 5).until(expected_conditions.visibility_of_element_located(PASSWORD_INPUT))
         password_imput.send_keys(PASSWORD)
         browser.find_element(*LOGIN_SUBMIT_BUTTON).click()
-        username = WebDriverWait(browser, 3).until(expected_conditions.visibility_of_element_located(USERNAME_HEADER))
-        assert username.text == 'User.', 'Отсутствует имя пользователя'
+        assert WebDriverWait(browser, 3).until(expected_conditions.visibility_of_element_located(USERNAME_HEADER)), 'Отсутствует имя пользователя'

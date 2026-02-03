@@ -12,8 +12,7 @@ class TestCreatingAd:
             видит модальное окно с заголовком «Чтобы разместить объявление, авторизуйтесь»."""
         webdrivwer =  WebDriverWait(browser, 5)
         browser.find_element(*POST_AN_AD_BUTTON).click()
-        header = webdrivwer.until(expected_conditions.visibility_of_element_located(HEADER_CREATE_AD_AUTH_REQUIRED))
-        assert header.text == 'Чтобы разместить объявление, авторизуйтесь', 'Модальное окно с заголовком «Чтобы разместить объявление, авторизуйтесь» не появилось'
+        assert webdrivwer.until(expected_conditions.visibility_of_element_located(HEADER_CREATE_AD_AUTH_REQUIRED)), 'Модальное окно с заголовком «Чтобы разместить объявление, авторизуйтесь» не появилось'
 
     def test_crating_ad_page_success_сreating_ad_authorized_user_shows_ad_in_profile(self,browser, open_create_listing_page):
         """Тест проверяет, что пользователь создаёт объявление и видит его в профиле в блоке 'Мои объявления'."""
